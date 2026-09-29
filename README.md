@@ -1,212 +1,143 @@
-🦺 PPE Detection & Construction Safety Monitoring
+# 🦺 PPE Detection & Construction Safety Monitoring
 
-Real-time construction safety monitoring using YOLOv8 and OpenCV.
 
-📌 Overview
+# Construction Safety Detection - Mail Alert (Yolov8)
 
-This project is an AI-powered Personal Protective Equipment (PPE) Detection System designed to improve safety monitoring at construction sites.
+This project focuses on enhancing construction site safety through real-time detection of safety gear such as helmets, vests, and masks worn by workers, as well as detecting the presence of a person. The detection is performed using YOLOv8, a state-of-the-art object detection algorithm.
 
-The system uses YOLOv8 and OpenCV to detect workers and identify essential safety equipment such as helmets, safety vests, and masks in real time.
 
-It also provides real-time detection counts and can send email alerts when a person is detected without a helmet.
+## Overview
 
-✨ Features
+Construction sites present various safety hazards, and ensuring that workers wear appropriate safety gear is crucial for accident prevention. This project automates the process of safety gear detection using computer vision techniques. By deploying YOLOv8, the system can detect whether a worker is wearing a helmet, a vest, a mask, or all, and identify people in real-time.
 
-🪖 Helmet Detection – Detects whether a worker is wearing a helmet.
+## Features
 
-🦺 Safety Vest Detection – Identifies workers wearing safety vests.
+- **Helmet Detection:** Detects whether a worker is wearing a helmet.
+- **Vest Detection:** Detects whether a worker is wearing a safety vest.
+- **Mask Detection:** Detects whether a worker is wearing a mask.
+- **Person Detection:** Detects the presence of a person within the construction site.
+- **Count Display:** Displays real-time counts of detected helmets, vests, masks, and persons on a sideboard overlay.
+- **Email Alerts:** Sends email alerts if a person is detected without a helmet, with a frame of the incident attached.
+- **Non-Blocking Email Process:** Ensures video feed remains smooth while email alerts are sent in the background.
+- **Mail Sent Notification:** A popup is displayed in the top-right corner of the video feed when an email alert is successfully sent.
 
-😷 Mask Detection – Detects whether a worker is wearing a mask.
+## Requirements
 
-👤 Person Detection – Detects people within the monitored area.
+- Python 3.9
+- YOLOv8 dependencies (refer to YOLOv8 documentation for installation instructions)
+- OpenCV
+- Other dependencies as mentioned in the project code
 
-📊 Real-Time Count Display – Displays the number of detected helmets, vests, masks, and persons.
+## Installation
 
-📧 Email Alerts – Sends an alert when a person is detected without a helmet.
+### Using `conda` (Recommended)
 
-⚡ Non-Blocking Email Process – Helps maintain a smooth video feed while alerts are sent.
+1. Clone the repository:
 
-🔔 Mail Sent Notification – Displays a notification when an email alert is successfully sent.
+    ```bash
+    git clone https://github.com/Ansarimajid/Construction-PPE-Detection.git
+    cd Construction-PPE-Detection
+    ```
 
-🎥 Real-Time Video Detection – Supports webcam/video-based monitoring.
+2. Create a conda environment from the `yolo_env.yml` file:
 
-🛠️ Tech Stack
+    ```bash
+    conda env create -f yolo_env.yml
+    ```
 
-Technology
+3. Activate the environment:
 
-Purpose
+    ```bash
+    conda activate yolo
+    ```
 
-Python
+4. Ensure the YOLOv8 weights file (`ppe.pt`) and place it in the designated directory.
 
-Core programming
+### Using `pip`
 
-YOLOv8
+1. Clone the repository:
 
-Object detection
+    ```bash
+    git clone https://github.com/Ansarimajid/Construction-PPE-Detection.git
+    cd Construction-PPE-Detection
+    ```
 
-OpenCV
+2. Install the dependencies:
 
-Computer vision & video processing
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-NumPy
+3. Ensure the YOLOv8 weights file (`ppe.pt`) and place it in the designated directory.
 
-Numerical processing
+---
 
-SMTP / Email
+## Configuration for Email Alerts
 
-Safety alert notifications
+To enable email alert functionality, update the `.env` file in the project directory with your email details:
 
-Conda / pip
+```text
+SENDER_EMAIL=your_email@gmail.com
+RECEIVER_EMAIL=receiver_email@example.com
+EMAIL_PASSWORD=your_email_password
+```
 
-Environment & dependency management
+- **SENDER_EMAIL:** The email address that will send the alerts.
+- **RECEIVER_EMAIL:** The email address that will receive the alerts.
+- **EMAIL_PASSWORD:** The app-specific password or account password for the sender email. (For Gmail, you need to generate an [app-specific password](https://support.google.com/accounts/answer/185833?hl=en)).
 
-🧠 How It Works
+> **Important:** Do not share your `.env` file publicly to avoid exposing sensitive information.
 
-Camera / Video Input
-        ↓
-   YOLOv8 Model
-        ↓
-Object Detection
-        ↓
-┌─────────────────────────────┐
-│ Person                      │
-│ Helmet                      │
-│ Safety Vest                 │
-│ Mask                        │
-└─────────────────────────────┘
-        ↓
-Real-Time Detection Results
-        ↓
-Safety Monitoring
-        ↓
-Email Alert if Helmet Missing
+---
 
-📂 Project Structure
+## Usage
 
-PPE-Detection-Master/
-│
-├── Model/
-│   └── PPE detection model files
-│
-├── Visuals/
-│   └── Project visuals
-│
-├── app.py
-├── webcam.py
-├── webcam1.py
-├── webcam2.py
-├── requirements.txt
-├── yolo_env.yml
-├── ppe-detection.ipynb
-├── .gitignore
-└── README.md
+1. Navigate to the project directory.
 
-⚙️ Requirements
+2. Run the detection script:
 
-Python 3.9
+    ```bash
+    python webcam.py
+    ```
 
-YOLOv8
+3. The script will initiate real-time detection using your webcam or process a video file.
 
-OpenCV
+4. Detected objects will be highlighted with bounding boxes indicating whether a helmet, vest, and/or mask is worn, and if a person is detected. The following features are included:
 
-Dependencies listed in requirements.txt
+    - **Real-Time Detection Overlay:** Bounding boxes with class labels.
+    - **Counts Display:** Real-time display of detected helmets, vests, masks, and persons.
+    - **Email Alerts:** Alerts for any person without a helmet, with an image attachment of the frame.
 
-🚀 Installation
+---
 
-1. Clone the repository
+## Upgrades in This Project
 
-git clone https://github.com/Nikkiram435/PPE-Detection-Master.git
-cd PPE-Detection-Master
+- **Email Alert with Attachment:** Sends an email every 10 seconds when a person is detected without a helmet, including the captured frame as an attachment.
+- **Non-Blocking Email Process:** Email alerts are sent in the background to ensure smooth video streaming without interruptions.
+- **Mail Sent Popup:** A popup notification is displayed in the top-right corner of the video feed to confirm that the email has been sent.
+- **Real-Time Counting:** Real-time count of detected helmets, vests, masks, and persons is displayed on the sideboard.
 
-2. Install dependencies
+---
 
-Using pip:
+## Customization
 
-pip install -r requirements.txt
+You can fine-tune the detection parameters, email settings, and thresholds in the `webcam.py` script to adapt to different environments and requirements.
 
-Or using Conda:
+---
 
-conda env create -f yolo_env.yml
-conda activate yolo
+## Contributing
 
-3. Run the application
+Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
 
-python webcam.py
+---
 
-The system will start real-time PPE detection using the webcam/video input.
+## License
 
-📧 Email Alert Configuration
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-The project supports email notifications for helmet violations.
+---
 
-If email alerts are enabled, configure the required email settings through environment variables.
+## Acknowledgments
 
-Do not upload real passwords, API keys, or other credentials to GitHub.
-
-Example:
-
-SENDER_EMAIL=your_email@example.com
-RECEIVER_EMAIL=receiver@example.com
-EMAIL_PASSWORD=your_app_password
-
-⚠️ Never commit real credentials or sensitive information to a public repository.
-
-🎯 Use Cases
-
-This system can be used for:
-
-Construction site safety monitoring
-
-Workplace PPE compliance
-
-Helmet compliance detection
-
-Real-time safety surveillance
-
-Computer vision-based safety systems
-
-Automated safety notifications
-
-🔮 Future Improvements
-
-Possible future enhancements include:
-
-📱 Web-based monitoring dashboard
-
-☁️ Cloud-based monitoring
-
-📈 Safety compliance analytics
-
-🎥 Multi-camera support
-
-🚨 More PPE violation alerts
-
-📊 Historical safety reports
-
-🌐 Remote monitoring
-
-📸 Project Preview
-
-Add project screenshots or demo images here:
-
-![PPE Detection](Visuals/ppe-public-view.png)
-
-👩‍💻 Project
-
-PPE Detection & Construction Safety Monitoring
-
-Built as a final-year academic project using computer vision and deep learning techniques.
-
-📄 License
-
-This project is licensed under the MIT License.
-
-🙌 Acknowledgements
-
-YOLOv8
-
-OpenCV
-
-Python
-
-Open-source computer vision community
+- This project is built upon the YOLOv8 architecture developed by [YOLO](https://github.com/AlexeyAB/darknet).
+- Special thanks to the contributors and open-source community for their valuable insights and contributions.
